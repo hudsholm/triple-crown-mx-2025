@@ -1,67 +1,40 @@
----
-title: "Triple Crown Motocross - 2025 Report"
-format: 
-  html:
-    toc: true
----
+#### Scraping ####
 
-# 1 Abstract
-Give an overall summary of the report. What is different from last year and what to expect.
+library(tidyverse) # data cleaning
+library(rvest) # data scraping
+library(stringr) # string operations
+library(lubridate) # date/time operations
 
-# 2 Data scraping and tidying
-
-```{r}
-#| output: false
-library(tidyverse)
-library(rvest)
-library(stringr)
-library(lubridate)
-library(gt)
-library(ggplot2)
-library(expm)
-library(purrr)
-```
-
-Here is the points structure for the series.
-```{r}
 points <- tibble(finish = 1:40, 
-                 points = c(25,22,20,18,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0))
+                 points = c(25,22,20,18,16,15,14,13,12,11,
+                            10,9,8,7,6,5,4,3,2,1,0,0,0,0,0,0,0,0,0,0,
+                            0,0,0,0,0,0,0,0,0,0))
 
-points |>
-  slice_head(n = 20) |>
-  gt() |>
-  cols_label(finish = "Finish",
-             points = "Points")
-```
-
-Here is a function that converts the lap times (string format) to seconds (numeric format). For example, a lap time of 1:13.21 gets converted to 73.21.
-
-```{r}
 convert_to_seconds <- function(time_string) {
+  # Check if the input is a valid string and not empty
   if (is.na(time_string) | time_string == "") {
     return(NA)
   }
   
+  # If the time_string has a colon
   if (grepl(":", time_string)) {
-    mins <- as.numeric(substr(time_string, 1, 
-                              regexpr(":", time_string) - 1))
-    secs <- as.numeric(substr(time_string, 
-                              regexpr(":", time_string) + 1,
+    # Extract minutes and seconds
+    mins <- as.numeric(substr(time_string, 1, regexpr(":", time_string) - 1))
+    secs <- as.numeric(substr(time_string, regexpr(":", time_string) + 1,
                               nchar(time_string)))
     
     return(mins * 60 + secs)
   } 
   
+  # If the time_string does not have a colon
   else {
+    # Direct conversion for seconds
     numeric_val <- as.numeric(time_string)
     
     return(numeric_val)
   }
 }
-```
 
-Here is the function to scrap the data from the Trackside tables.
-```{r}
 mx_scraping <- function(url, year, round, moto, track,
                         date, raceid, class, type) {
   webpage <- read_html(url)
@@ -179,10 +152,7 @@ mx_scraping <- function(url, year, round, moto, track,
   return(final_lap_times)
   
 }
-```
 
-```{r}
-#| warning: false
 rd11_2025_450 <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=33&e=20766&rn=1&rt=M", 2025, 1, 1, "Wild Rose MX", "06/01/2025", "450_2025_1", "450", "mx")
 
 rd12_2025_450 <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=33&e=20766&rn=2&rt=M", 2025, 1, 2, "Wild Rose MX", "06/01/2025", "450_2025_2", "450", "mx")
@@ -265,106 +235,33 @@ all_2025_wmx <- bind_rows(rd11_2025_wmx, rd12_2025_wmx,
                           rd51_2025_wmx, rd52_2025_wmx)
 
 all_2025 <- bind_rows(all_2025_450, all_2025_250, all_2025_wmx)
-write.csv(all_2025,"all_2025.csv")
-```
 
-```{r}
-#| warning: false
-all_2025_riders <- all_2025 |>
-  distinct(rider)
-
-# List of all riders from the Trackside website
-# Type "%" in the search bar
-url <- "https://cmrc.tracksideresults.com/search.asp?search=%25&searchType=name&Submit=Find"
-webpage <- read_html(url)
-riders_table <- webpage |>
-  html_nodes("table") |>
-  html_table(fill = TRUE)
-
-riders <- riders_table[[6]]
-  
-riders <- riders |>
-  as_tibble() |>
-  slice(2:n()) |>
-  rename(name = X2, number = X3, location = X4) |>
-  select(name, number, location)
-
-write.csv(riders,"all_2025_riders.csv", row.names = FALSE)
-```
-
-```{r}
-#| warning: false
-# Replace "¬†" with " " and remove X column (row number)
+write.csv(all_2025,"/Users/hudsonholman/Documents/Work/Triple Crown Motocross/2025/all_2025.csv")
+# Now remove "¬†" in rider variable
 # Save as all_2025_cleaned.csv
-# In all_2025_riders.csv, added manufacturer, updated_location, round variables
-# Save as all_2025_riders_complete.csv
+# Re-import back into R
+all_2025_cleaned <- read.csv("/Users/hudsonholman/Documents/Work/Triple Crown Motocross/2025/all_2025_cleaned.csv")
 
-all_2025_cleaned <- read.csv("all_2025_cleaned.csv")
-all_2025_riders_complete <- read.csv("all_2025_riders_complete.csv")
-```
+#### Can women compete with men? ####
+# What place would she get if we applied her times to the 250 race?
 
-```{r}
-#| warning: false
-all_2025_riders_complete <- all_2025_riders_complete |>
-  select(-number)
+library(ggplot2)
 
-all_2025_complete <- all_2025_cleaned |>
-  cross_join(all_2025_riders_complete) |>
-  filter(str_detect(rider, name)) |>
-  filter(is.na(round.y) | round.x == round.y) |>
-  select(finish, name, number, lap, time, behind, place, year, round.x, moto, track, date, race_id, class, type, points, manufacturer, updated_location) |>
-  rename(rider = name, round = round.x, location = updated_location) |>
-  distinct() |>
-  mutate(date = ymd(date))
+test <- all_2025 |>
+  filter(class != "450" & finish == 1) |>
+  arrange(track, moto, lap, rider)
 
-write.csv(all_2025_complete,"all_2025_complete.csv")
-```
-
-New features and bike manufacturers
-
-# 3 Analysis
-
-## 3.1 Reapplying 2024 analysis
-For fatique effects, compare the first moto with the second moto of the day. Expect slower lap times. Consider mechanical changes or improved/worse track conditions.
-Look at the big findings from last year - WMX passing probs and fatigue effects - and see if same trends this year.
-## 3.2 Moto quartile positions
-Looking at a rider's position at the 0/25/50/75/100% point of the moto.
-## 3.3 Standarized lap times
-Need a way to compare across riders and tracks.
-## 3.4 Consistency scores
-Separate steady from volatile riders. Need to apply lap time standardization
-## 3.5 Defensive skill
-Ability to hold position under pressure (rider consistently within 2 seconds back).
-## 3.6 Inflection laps
-Revisiting win probability model from last year
-More evaluation to make sure it is accurate
-Identify laps where win probability shifts sharply
-## 3.7 Traffic effects
-Clear air vs battles: Top riders standardized times, split between when in 1st place and trailing someone by 2 seconds.
-What about when leaders come up on lap traffic? Blue flag - does it work or are leaders slowed down?
-## 3.8 Gender gap
-Compare 250 class and WMX class riders since they use the same bike. How would the women do in the men's series (simulation)?
-## 3.9 Prize money
-Is it a financially viable occupation? Need to reference official series docs.
-## 3.10 Entertainment value
-Average gap to leader by series
-## 3.11 Weather effects
-Compare the lap times for this year to last year at the same tracks with the temperature. Consider weather types (like rain) and track changes (not the same setup every year)
-## 3.12 Fall prediction
-First, creating the reasonable definition for a fall - big delta in lap time and place, big difference between last lap place and finish position. No easy way to confirm.
-Then look at the characteristics/conditions around those falls - which riders typically involved, late in the moto?
-What would happen in the points race if certain accidents (falls of 2 riders at same time) didn't happen?
-## 3.13 Rider profiles
-Conducted in Tableau this time. Include link here.
-Archetype clusters -> Look at the NHL/NBA player cards (percentiles) and try to replicate.
-Include photos to display.
-## 3.14 Expected finish model
-Linear regression/random forest?
-Finish ~ Rider historical pace + lap + current place + time gaps to each place
-## 3.15 Pass probability model
-P(place-1) ~ Rider historical pace? + lap + current place + time behind next place + time ahead of next place
-
-# 4 Extensions
-The big thing I want to do to expand the project in the future is add previous years data to the analysis. Consolidate everything in one dataset. According to the [results](https://triplecrownseries.ca/results/) tab of the Triple Crown Series website, there is data going back to 2018.
-
-# 5 Notes
+all_2025 |>
+  filter((lap != 1 & class == "250") | (lap != 1 & class == "WMX" & finish == 1)) |>
+  group_by(rider, round, moto) |>
+  mutate(total_time = cumsum(time)) |>
+  ungroup() |>
+  group_by(round, moto) |>
+  arrange(round, moto, lap, total_time) |>
+  ungroup() |>
+  group_by(round, moto, lap) |>
+  mutate(time_based_place = row_number()) |>
+  ungroup() |>
+  filter(class == "WMX" & race_id != "wmx_2025_5") |>
+  ggplot(aes(x = lap, y = time_based_place, color = race_id)) +
+  geom_line()
