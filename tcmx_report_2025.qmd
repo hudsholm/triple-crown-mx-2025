@@ -11,6 +11,7 @@ Give an overall summary of the report. What is different from last year and what
 # 2 Data scraping and tidying
 
 ```{r}
+#| warning: false
 #| output: false
 library(tidyverse)
 library(rvest)
@@ -203,12 +204,27 @@ rd51_2025_450 <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&
 
 rd52_2025_450 <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=33&e=20808&rn=2&rt=M", 2025, 5, 2, "Sand Del Lee", "07/13/2025", "450_2025_10", "450", "mx")
 
+rd61_2025_450 <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=33&e=20815&rn=1&rt=M", 2025, 6, 1, "Riverglade MX", "07/19/2025", "450_2025_11", "450", "mx")
+
+rd62_2025_450 <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=33&e=20815&rn=2&rt=M", 2025, 6, 2, "Riverglade MX", "07/19/2025", "450_2025_12", "450", "mx")
+
+rd71_2025_450 <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=33&e=20822&rn=1&rt=M", 2025, 7, 1, "MX Deschambault", "07/26/2025", "450_2025_13", "450", "mx")
+
+rd72_2025_450 <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=33&e=20822&rn=2&rt=M", 2025, 7, 2, "MX Deschambault", "07/26/2025", "450_2025_14", "450", "mx")
+
+rd81_2025_450 <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=33&e=20829&rn=1&rt=M", 2025, 8, 1, "Walton Raceway", "08/09/2025", "450_2025_15", "450", "mx")
+
+rd82_2025_450 <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=33&e=20829&rn=2&rt=M", 2025, 8, 2, "Walton Raceway", "08/09/2025", "450_2025_16", "450", "mx")
+
 
 all_2025_450 <- bind_rows(rd11_2025_450, rd12_2025_450,
                           rd21_2025_450, rd22_2025_450,
                           rd31_2025_450, rd32_2025_450,
                           rd41_2025_450, rd42_2025_450,
-                          rd51_2025_450, rd52_2025_450)
+                          rd51_2025_450, rd52_2025_450,
+                          rd61_2025_450, rd62_2025_450,
+                          rd71_2025_450, rd72_2025_450,
+                          rd81_2025_450, rd82_2025_450)
 
 rd11_2025_250 <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=32&e=20766&rn=1&rt=M", 2025, 1, 1, "Wild Rose MX", "06/01/2025", "250_2025_1", "250", "mx")
 
@@ -230,11 +246,26 @@ rd51_2025_250 <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&
 
 rd52_2025_250 <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=32&e=20808&rn=2&rt=M", 2025, 5, 2, "Sand Del Lee", "07/13/2025", "250_2025_10", "250", "mx")
 
+rd61_2025_250 <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=32&e=20815&rn=1&rt=M", 2025, 6, 1, "Riverglade MX", "07/19/2025", "450_2025_11", "450", "mx")
+
+rd62_2025_250 <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=32&e=20815&rn=2&rt=M", 2025, 6, 2, "Riverglade MX", "07/19/2025", "450_2025_12", "450", "mx")
+
+rd71_2025_250 <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=32&e=20822&rn=1&rt=M", 2025, 7, 1, "MX Deschambault", "07/26/2025", "450_2025_13", "450", "mx")
+
+rd72_2025_250 <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=32&e=20822&rn=2&rt=M", 2025, 7, 2, "MX Deschambault", "07/26/2025", "450_2025_14", "450", "mx")
+
+rd81_2025_250 <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=32&e=20829&rn=1&rt=M", 2025, 8, 1, "Walton Raceway", "08/09/2025", "450_2025_15", "450", "mx")
+
+rd82_2025_250 <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=32&e=20829&rn=2&rt=M", 2025, 8, 2, "Walton Raceway", "08/09/2025", "450_2025_16", "450", "mx")
+
 all_2025_250 <- bind_rows(rd11_2025_250, rd12_2025_250,
                           rd21_2025_250, rd22_2025_250,
                           rd31_2025_250, rd32_2025_250,
                           rd41_2025_250, rd42_2025_250,
-                          rd51_2025_250, rd52_2025_250)
+                          rd51_2025_250, rd52_2025_250,
+                          rd61_2025_250, rd62_2025_250,
+                          rd71_2025_250, rd72_2025_250,
+                          rd81_2025_250, rd82_2025_250)
 
 rd11_2025_wmx <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=54&e=20766&rn=1&rt=M", 2025, 1, 1, "Wild Rose MX", "06/01/2025", "wmx_2025_1", "WMX", "mx")
 
@@ -258,11 +289,26 @@ rd51_2025_wmx <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&
 
 rd52_2025_wmx <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=58&e=20808&rn=2&rt=M", 2025, 5, 2, "Sand Del Lee", "07/13/2025", "wmx_2025_11", "WMX", "mx")
 
+rd61_2025_wmx <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=58&e=20815&rn=1&rt=M", 2025, 6, 1, "Riverglade MX", "07/19/2025", "450_2025_11", "450", "mx")
+
+rd62_2025_wmx <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=58&e=20815&rn=2&rt=M", 2025, 6, 2, "Riverglade MX", "07/19/2025", "450_2025_12", "450", "mx")
+
+rd71_2025_wmx <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=58&e=20822&rn=1&rt=M", 2025, 7, 1, "MX Deschambault", "07/26/2025", "450_2025_13", "450", "mx")
+
+rd72_2025_wmx <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=58&e=20822&rn=2&rt=M", 2025, 7, 2, "MX Deschambault", "07/26/2025", "450_2025_14", "450", "mx")
+
+rd81_2025_wmx <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=58&e=20829&rn=1&rt=M", 2025, 8, 1, "Walton Raceway", "08/09/2025", "450_2025_15", "450", "mx")
+
+rd82_2025_wmx <- mx_scraping("https://cmrc.tracksideresults.com/laptimes.asp?s=&c=58&e=20829&rn=2&rt=M", 2025, 8, 2, "Walton Raceway", "08/09/2025", "450_2025_16", "450", "mx")
+
 all_2025_wmx <- bind_rows(rd11_2025_wmx, rd12_2025_wmx,
                           rd21_2025_wmx, rd22_2025_wmx, rd23_2025_wmx,
                           rd31_2025_wmx, rd32_2025_wmx,
                           rd41_2025_wmx, rd42_2025_wmx,
-                          rd51_2025_wmx, rd52_2025_wmx)
+                          rd51_2025_wmx, rd52_2025_wmx,
+                          rd61_2025_wmx, rd62_2025_wmx,
+                          rd71_2025_wmx, rd72_2025_wmx,
+                          rd81_2025_wmx, rd82_2025_wmx)
 
 all_2025 <- bind_rows(all_2025_450, all_2025_250, all_2025_wmx)
 write.csv(all_2025,"all_2025.csv")
@@ -270,6 +316,7 @@ write.csv(all_2025,"all_2025.csv")
 
 ```{r}
 #| warning: false
+#| eval: false
 all_2025_riders <- all_2025 |>
   distinct(rider)
 
@@ -320,13 +367,659 @@ all_2025_complete <- all_2025_cleaned |>
 write.csv(all_2025_complete,"all_2025_complete.csv")
 ```
 
-New features and bike manufacturers
+New to scraping this year are the bike manufacturers of each rider. 
+
+In future iterations, we want to look at using AI scraping software to help with the process. The process of collecting manufacturer info for ~300 riders is tedious.
 
 # 3 Analysis
 
 ## 3.1 Reapplying 2024 analysis
+
+### 3.1.1 Demographic summary
+
+Distributions of home locations:
+
+```{r}
+#| warning: false
+#| echo: false
+all_2025_complete |>
+  distinct(class, rider, location) |>
+  group_by(class, location) |>
+  summarize(n = n(),
+            .groups = "drop") |>
+  ungroup() |>
+  arrange(desc(n)) |>
+  pivot_wider(names_from = class,
+              values_from = n) |>
+  filter(! location == "unknown") |>
+  mutate(`250` = if_else(is.na(`250`), 0, `250`),
+         WMX = if_else(is.na(WMX), 0, WMX),
+         `450` = if_else(is.na(`450`), 0, `450`)) |>
+  select(location, `450`, `250`, WMX) |>
+  gt() |>
+  cols_label(location = "Location",
+             `450` = "450",
+             `250` = "250",
+             WMX = "WMX")
+```
+
+### 3.1.2 Passing probabilities
+
+<u>450 class</u>:
+```{r}
+#| warning: false
+#| echo: false
+all_2025_450_add <- all_2025_complete |>
+  filter(class == "450") |>
+  mutate(race_id_name = paste(race_id, rider, sep = "_")) |>
+  mutate(place_next = lead(place, n = 1L,
+                           order_by = race_id_name)) |>
+  group_by(race_id_name) |>
+  mutate(place_next = c(place_next[-n()], NA)) |>
+  ungroup() |>
+  drop_na(place, place_next) |>
+  select(place, place_next) |>
+  group_by(place, place_next) |>
+  summarise(n = n()) |>
+  ungroup()
+
+all_2025_450_add2 <- all_2025_450_add |>
+  group_by(place) |>
+  summarise(total = sum(n)) |>
+  ungroup()
+
+all_2025_450_add <- all_2025_450_add |>
+  left_join(all_2025_450_add2) |>
+  mutate(prob = n/total)
+
+rows = 30
+cols = 30
+cats <- 1:30
+
+matrix450_1 <- matrix(0, nrow = rows, ncol = cols)
+for (i in 1:rows) {
+  for (j in 1:cols) {
+    matrix_row <- all_2025_450_add |> 
+      filter(place == i & place_next == j)
+    if (nrow(matrix_row) == 0) {
+      matrix_value <- 0
+    } else {
+      matrix_value <- all_2025_450_add |> 
+        filter(place == i & place_next == j) |> pull(prob)
+    }
+    matrix450_1[i, j] <- matrix_value
+  }
+}
+
+rownames(matrix450_1) <- cats
+colnames(matrix450_1) <- cats
+print(round(matrix450_1, 2))
+```
+
+```{r}
+#| warning: false
+#| echo: false
+all_2025_450_placecat <- all_2025_complete |>
+  filter(class == "450") |>
+  mutate(race_id_name = paste(race_id, rider, sep = "_")) |>
+  mutate(place_next = lead(place, n = 1L,
+                           order_by = race_id_name)) |>
+  group_by(race_id_name) |>
+  mutate(place_next = c(place_next[-n()], NA)) |>
+  ungroup() |>
+  drop_na(place, place_next) |>
+  select(place, place_next) |>
+  mutate(place_cat = ifelse(place >= 1 & place <= 5, "1-5",
+                     ifelse(place >= 6 & place <= 10, "6-10",
+                     ifelse(place >= 11 & place <= 15, "11-15",
+                     ifelse(place >= 16 & place <= 20, "16-20",
+                     ifelse(place >= 21 & place <= 25, 
+                            "21-25","26-30"))))),
+         place_next_cat = ifelse(place_next >= 1 & place_next <= 5, "1-5",
+                          ifelse(place_next >= 6 & place_next <= 10, "6-10",
+                          ifelse(place_next >= 11 & place_next <= 15, "11-15",
+                          ifelse(place_next >= 16 & place_next <= 20, "16-20",
+                          ifelse(place_next >= 21 & place_next <= 25, "21-25", "26-30")))))) |>
+  select(place_cat, place_next_cat) |>
+  group_by(place_cat, place_next_cat) |>
+  summarise(n = n()) |>
+  ungroup()
+
+all_2025_450_placecat2 <- all_2025_450_placecat |>
+  group_by(place_cat) |>
+  summarise(total = sum(n)) |>
+  ungroup()
+
+all_2025_450_placecat <- all_2025_450_placecat |>
+  left_join(all_2025_450_placecat2) |>
+  mutate(prob = n/total)
+
+rows2 = 6
+cols2 = 6
+cats2 <- c("1-5", "6-10", "11-15", "16-20", "21-25", "26-30")
+
+matrix450_2 <- matrix(0, nrow = rows2, ncol = cols2)
+for (i in 1:rows2) {
+  for (j in 1:cols2) {
+    matrix_row <- all_2025_450_placecat |>
+      filter(place_cat == cats2[i] & place_next_cat == cats2[j])
+    if (nrow(matrix_row) == 0) {
+      matrix_value <- 0
+    } else {
+      matrix_value <- all_2025_450_placecat |> 
+        filter(place_cat == cats2[i] & place_next_cat == cats2[j]) |> pull(prob)
+    }
+    matrix450_2[i, j] <- matrix_value
+  }
+}
+
+rownames(matrix450_2) <- cats2
+colnames(matrix450_2) <- cats2
+
+tm_450 <- as.data.frame(as.table(matrix450_2))
+ggplot(tm_450, aes(Var1, Var2, fill = Freq)) +
+  geom_tile() +
+  scale_fill_gradient(low = "white", high = "#da3a32") +
+  geom_text(aes(label = round(Freq,2))) +
+  labs(title = "Passing Probabilities",
+       subtitle = "2025 Season - 450 class",
+       x = "From Place", 
+       y = "To Place", fill = "Probability")
+```
+
+<u>250 class</u>:
+
+```{r}
+#| warning: false
+#| echo: false
+all_2025_250_add <- all_2025_complete |>
+  filter(class == "250") |>
+  mutate(race_id_name = paste(race_id, rider, sep = "_")) |>
+  mutate(place_next = lead(place, n = 1L,
+                           order_by = race_id_name)) |>
+  group_by(race_id_name) |>
+  mutate(place_next = c(place_next[-n()], NA)) |>
+  ungroup() |>
+  drop_na(place, place_next) |>
+  select(place, place_next) |>
+  group_by(place, place_next) |>
+  summarise(n = n()) |>
+  ungroup()
+
+all_2025_250_add2 <- all_2025_250_add |>
+  group_by(place) |>
+  summarise(total = sum(n)) |>
+  ungroup()
+
+all_2025_250_add <- all_2025_250_add |>
+  left_join(all_2025_250_add2) |>
+  mutate(prob = n/total)
+
+rows = 40
+cols = 40
+cats <- 1:40
+
+matrix250_1 <- matrix(0, nrow = rows, ncol = cols)
+for (i in 1:rows) {
+  for (j in 1:cols) {
+    matrix_row <- all_2025_250_add |> 
+      filter(place == i & place_next == j)
+    if (nrow(matrix_row) == 0) {
+      matrix_value <- 0
+    } else {
+      matrix_value <- all_2025_250_add |> 
+        filter(place == i & place_next == j) |> pull(prob)
+    }
+    matrix250_1[i, j] <- matrix_value
+  }
+}
+
+rownames(matrix250_1) <- cats
+colnames(matrix250_1) <- cats
+print(round(matrix250_1, 2))
+```
+
+```{r}
+#| warning: false
+#| echo: false
+all_2025_250_placecat <- all_2025_complete |>
+  filter(class == "250") |>
+  mutate(race_id_name = paste(race_id, rider, sep = "_")) |>
+  mutate(place_next = lead(place, n = 1L,
+                           order_by = race_id_name)) |>
+  group_by(race_id_name) |>
+  mutate(place_next = c(place_next[-n()], NA)) |>
+  ungroup() |>
+  drop_na(place, place_next) |>
+  select(place, place_next) |>
+  mutate(place_cat = ifelse(place >= 1 & place <= 5, "1-5",
+                     ifelse(place >= 6 & place <= 10, "6-10",
+                     ifelse(place >= 11 & place <= 15, "11-15",
+                     ifelse(place >= 16 & place <= 20, "16-20",
+                     ifelse(place >= 21 & place <= 25, "21-25",
+                     ifelse(place >= 26 & place <= 30, "26-30",
+                     ifelse(place >= 31 & place <= 35,
+                            "31-35", "36-40"))))))),
+         place_next_cat = ifelse(place_next >= 1 & place_next <= 5, "1-5",
+                          ifelse(place_next >= 6 & place_next <= 10, "6-10",
+                          ifelse(place_next >= 11 & place_next <= 15, "11-15",
+                          ifelse(place_next >= 16 & place_next <= 20, "16-20",
+                          ifelse(place_next >= 21 & place_next <= 25, "21-25", 
+                          ifelse(place_next >= 26 & place_next <= 30, "26-30",
+                          ifelse(place_next >= 31 & place_next <= 35, "31-35", "36-40")))))))) |>
+  select(place_cat, place_next_cat) |>
+  group_by(place_cat, place_next_cat) |>
+  summarise(n = n()) |>
+  ungroup()
+
+all_2025_250_placecat2 <- all_2025_250_placecat |>
+  group_by(place_cat) |>
+  summarise(total = sum(n)) |>
+  ungroup()
+
+all_2025_250_placecat <- all_2025_250_placecat |>
+  left_join(all_2025_250_placecat2) |>
+  mutate(prob = n/total)
+
+rows2 = 8
+cols2 = 8
+cats2 <- c("1-5", "6-10", "11-15", "16-20", "21-25", "26-30",
+           "31-35", "36-40")
+
+matrix250_2 <- matrix(0, nrow = rows2, ncol = cols2)
+for (i in 1:rows2) {
+  for (j in 1:cols2) {
+    matrix_row <- all_2025_250_placecat |>
+      filter(place_cat == cats2[i] & place_next_cat == cats2[j])
+    if (nrow(matrix_row) == 0) {
+      matrix_value <- 0
+    } else {
+      matrix_value <- all_2025_250_placecat |> 
+        filter(place_cat == cats2[i] & place_next_cat == cats2[j]) |> pull(prob)
+    }
+    matrix250_2[i, j] <- matrix_value
+  }
+}
+
+rownames(matrix250_2) <- cats2
+colnames(matrix250_2) <- cats2
+
+tm_250 <- as.data.frame(as.table(matrix250_2))
+ggplot(tm_250, aes(Var1, Var2, fill = Freq)) +
+  geom_tile() +
+  scale_fill_gradient(low = "white", high = "#da3a32") +
+  geom_text(aes(label = round(Freq,2))) +
+  labs(title = "Passing Probabilities",
+       subtitle = "2025 Season - 250 class",
+       x = "From Place", 
+       y = "To Place", fill = "Probability")
+```
+
+<u>WMX class</u>:
+
+```{r}
+#| warning: false
+#| echo: false
+all_2025_wmx_add <- all_2025_complete |>
+  filter(class == "WMX") |>
+  drop_na(place) |>
+  mutate(race_id_name = paste(race_id, rider, sep = "_")) |>
+  mutate(place_next = lead(place, n = 1L,
+                           order_by = race_id_name)) |>
+  group_by(race_id_name) |>
+  mutate(place_next = c(place_next[-n()], NA)) |>
+  ungroup() |>
+  drop_na(place, place_next) |>
+  select(place, place_next) |>
+  group_by(place, place_next) |>
+  summarise(n = n()) |>
+  ungroup()
+
+all_2025_wmx_add2 <- all_2025_wmx_add |>
+  group_by(place) |>
+  summarise(total = sum(n)) |>
+  ungroup()
+
+all_2025_wmx_add <- all_2025_wmx_add |>
+  left_join(all_2025_wmx_add2) |>
+  mutate(prob = n/total)
+
+rows = 30
+cols = 30
+cats <- 1:30
+
+matrixwmx_1 <- matrix(0, nrow = rows, ncol = cols)
+for (i in 1:rows) {
+  for (j in 1:cols) {
+    matrix_row <- all_2025_wmx_add |> 
+      filter(place == i & place_next == j)
+    if (nrow(matrix_row) == 0) {
+      matrix_value <- 0
+    } else {
+      matrix_value <- all_2025_wmx_add |> 
+        filter(place == i & place_next == j) |> pull(prob)
+    }
+    matrixwmx_1[i, j] <- matrix_value
+  }
+}
+
+rownames(matrixwmx_1) <- cats
+colnames(matrixwmx_1) <- cats
+print(round(matrixwmx_1, 2))
+```
+
+```{r}
+#| warning: false
+all_2025_wmx_placecat <- all_2025_complete |>
+  filter(class == "WMX") |>
+  drop_na(place) |>
+  mutate(race_id_name = paste(race_id, rider, sep = "_")) |>
+  mutate(place_next = lead(place, n = 1L,
+                           order_by = race_id_name)) |>
+  group_by(race_id_name) |>
+  mutate(place_next = c(place_next[-n()], NA)) |>
+  ungroup() |>
+  drop_na(place, place_next) |>
+  select(place, place_next) |>
+  mutate(place_cat = ifelse(place >= 1 & place <= 5, "1-5",
+                     ifelse(place >= 6 & place <= 10, "6-10",
+                     ifelse(place >= 11 & place <= 15, "11-15",
+                     ifelse(place >= 16 & place <= 20, "16-20", "21-25")))),
+         place_next_cat = ifelse(place_next >= 1 & place_next <= 5, "1-5",
+                          ifelse(place_next >= 6 & place_next <= 10, "6-10",
+                          ifelse(place_next >= 11 & place_next <= 15, "11-15",
+                          ifelse(place_next >= 16 & place_next <= 20, "16-20", "21-25"))))) |>
+  select(place_cat, place_next_cat) |>
+  group_by(place_cat, place_next_cat) |>
+  summarise(n = n()) |>
+  ungroup()
+
+all_2025_wmx_placecat2 <- all_2025_wmx_placecat |>
+  group_by(place_cat) |>
+  summarise(total = sum(n)) |>
+  ungroup()
+
+all_2025_wmx_placecat <- all_2025_wmx_placecat |>
+  left_join(all_2025_wmx_placecat2) |>
+  mutate(prob = n/total)
+
+rows2 = 5
+cols2 = 5
+cats2 <- c("1-5", "6-10", "11-15", "16-20", "21-25")
+
+matrixwmx_2 <- matrix(0, nrow = rows2, ncol = cols2)
+for (i in 1:rows2) {
+  for (j in 1:cols2) {
+    matrix_row <- all_2025_wmx_placecat |>
+      filter(place_cat == cats2[i] & place_next_cat == cats2[j])
+    if (nrow(matrix_row) == 0) {
+      matrix_value <- 0
+    } else {
+      matrix_value <- all_2025_wmx_placecat |> 
+        filter(place_cat == cats2[i] & place_next_cat == cats2[j]) |> pull(prob)
+    }
+    matrixwmx_2[i, j] <- matrix_value
+  }
+}
+
+rownames(matrixwmx_2) <- cats2
+colnames(matrixwmx_2) <- cats2
+
+tm_wmx <- as.data.frame(as.table(matrixwmx_2))
+ggplot(tm_wmx, aes(Var1, Var2, fill = Freq)) +
+  geom_tile() +
+  scale_fill_gradient(low = "white", high = "#da3a32") +
+  geom_text(aes(label = round(Freq,2))) +
+  labs(title = "Passing Probabilities",
+       subtitle = "2025 Season - WMX class",
+       x = "From Place", 
+       y = "To Place", fill = "Probability")
+```
+
+At a track level:
+``` {r}
+#| warning: false
+#| echo: false
+pass_prob_moto_fn <- function(input_class, input_track) {
+  placecat <- all_2025_complete |>
+    filter(class == input_class & track == input_track) |>
+    mutate(race_id_name = paste(race_id, rider, sep = "_")) |>
+    mutate(place_next = lead(place, n = 1L,
+                             order_by = race_id_name)) |>
+    group_by(race_id_name) |>
+    mutate(place_next = c(place_next[-n()], NA)) |>
+    ungroup() |>
+    drop_na(place, place_next) |>
+    select(place, place_next) |>
+    mutate(place_cat = ifelse(place >= 1 & place <= 5, "1-5",
+                              ifelse(place >= 6 & place <= 10, "6-10",
+                                     ifelse(place >= 11 & place <= 15, "11-15",
+                                            ifelse(place >= 16 & place <= 20, "16-20",
+                                                   ifelse(place >= 21 & place <= 25, "21-25",
+                                                          ifelse(place >= 26 & place <= 30, "26-30",
+                                                                 ifelse(place >= 31 & place <= 35,
+                                                                        "31-35", "36-40"))))))),
+           place_next_cat = ifelse(place_next >= 1 & place_next <= 5, "1-5",
+                                   ifelse(place_next >= 6 & place_next <= 10, "6-10",
+                                          ifelse(place_next >= 11 & place_next <= 15, "11-15",
+                                                 ifelse(place_next >= 16 & place_next <= 20, "16-20",
+                                                        ifelse(place_next >= 21 & place_next <= 25, "21-25", 
+                                                               ifelse(place_next >= 26 & place_next <= 30, "26-30",
+                                                                      ifelse(place_next >= 31 & place_next <= 35, "31-35", "36-40")))))))) |>
+    select(place_cat, place_next_cat) |>
+    group_by(place_cat, place_next_cat) |>
+    summarise(n = n()) |>
+    ungroup()
+  
+  placecat2 <- placecat |>
+    group_by(place_cat) |>
+    summarise(total = sum(n)) |>
+    ungroup()
+  
+  placecat <- placecat |>
+    left_join(placecat2) |>
+    mutate(prob = n/total)
+  
+  distinct_cat <- placecat %>%
+    summarise(distinct_cats = n_distinct(place_cat)) |>
+    pull(distinct_cats)
+  
+    rows = distinct_cat
+    cols = distinct_cat
+    if (distinct_cat == 4) {
+      cats <- c("1-5", "6-10", "11-15", "16-20")
+    } else if (distinct_cat == 5) {
+      cats <- c("1-5", "6-10", "11-15", "16-20", "21-25")
+    } else if (distinct_cat == 6) {
+      cats <- c("1-5", "6-10", "11-15", "16-20", "21-25", "26-30")
+    } else if (distinct_cat == 7) {
+      cats <- c("1-5", "6-10", "11-15", "16-20", "21-25", "26-30",
+                "31-35")
+    } else if (distinct_cat == 8) {
+      cats <- c("1-5", "6-10", "11-15", "16-20", "21-25", "26-30",
+                "31-35", "36-40")
+    }
+    
+    pass_matrix <- matrix(0, nrow = rows, ncol = cols)
+    for (i in 1:rows) {
+      for (j in 1:cols) {
+        matrix_row <- placecat |>
+          filter(place_cat == cats[i] & place_next_cat == cats[j])
+        if (nrow(matrix_row) == 0) {
+          matrix_value <- 0
+        } else {
+          matrix_value <- placecat |> 
+            filter(place_cat == cats[i] & place_next_cat == cats[j]) |> pull(prob)
+        }
+        pass_matrix[i, j] <- matrix_value
+      }
+    }
+    
+    rownames(pass_matrix) <- cats
+    colnames(pass_matrix) <- cats
+
+  pass_matrix_df <- as.data.frame(as.table(pass_matrix))
+  p <- ggplot(pass_matrix_df, aes(Var1, Var2, fill = Freq)) +
+    geom_tile() +
+    scale_fill_gradient(low = "white", high = "#da3a32", guide = "none") +
+    geom_text(aes(label = round(Freq,2)), size = 4) +
+    labs(title = "Passing Probabilities",
+         subtitle = input_track,
+         x = "From Place", 
+         y = "To Place", fill = "Probability")
+  
+  return(p)
+}
+
+tracks1 <- all_2025_complete |>
+  filter(round <= 4) |>
+  distinct(track) |>
+  pull(track)
+
+tracks2 <- all_2025_complete |>
+  filter(round > 4) |>
+  distinct(track) |>
+  pull(track)
+
+plots1 <- map(
+  tracks1,
+  ~ pass_prob_moto_fn(
+      input_class = "450",
+      input_track = .x
+    )
+)
+
+plots2 <- map(
+  tracks2,
+  ~ pass_prob_moto_fn(
+      input_class = "450",
+      input_track = .x
+    )
+)
+
+library(patchwork)
+wrap_plots(plots1, ncol = 2)
+wrap_plots(plots2, ncol = 2)
+```
+
+At an individual rider level (Nicoletti, Ward, Pettis):
+```{r}
+#| warning: false
+#| echo: false
+pass_prob_rider_fn <- function(input_rider) {
+  placecat <- all_2025_complete |>
+    filter(rider == input_rider) |>
+    mutate(race_id_name = paste(race_id, rider, sep = "_")) |>
+    mutate(place_next = lead(place, n = 1L,
+                             order_by = race_id_name)) |>
+    group_by(race_id_name) |>
+    mutate(place_next = c(place_next[-n()], NA)) |>
+    ungroup() |>
+    drop_na(place, place_next) |>
+    select(place, place_next) |>
+    mutate(place_cat = ifelse(place >= 1 & place <= 5, "1-5",
+                              ifelse(place >= 6 & place <= 10, "6-10",
+                                     ifelse(place >= 11 & place <= 15, "11-15",
+                                            ifelse(place >= 16 & place <= 20, "16-20",
+                                                   ifelse(place >= 21 & place <= 25, "21-25",
+                                                          ifelse(place >= 26 & place <= 30, "26-30",
+                                                                 ifelse(place >= 31 & place <= 35, "31-35", "36-40"))))))),
+           place_next_cat = ifelse(place_next >= 1 & place_next <= 5, "1-5",
+                                   ifelse(place_next >= 6 & place_next <= 10, "6-10",
+                                          ifelse(place_next >= 11 & place_next <= 15, "11-15",
+                                                 ifelse(place_next >= 16 & place_next <= 20, "16-20",
+                                                        ifelse(place_next >= 21 & place_next <= 25, "21-25", 
+                                                               ifelse(place_next >= 26 & place_next <= 30, "26-30",
+                                                                      ifelse(place_next >= 31 & place_next <= 35, "31-35", "36-40")))))))) |>
+    select(place_cat, place_next_cat) |>
+    group_by(place_cat, place_next_cat) |>
+    summarise(n = n()) |>
+    ungroup()
+  
+  placecat2 <- placecat |>
+    group_by(place_cat) |>
+    summarise(total = sum(n)) |>
+    ungroup()
+  
+  placecat <- placecat |>
+    left_join(placecat2) |>
+    mutate(prob = n/total)
+  
+  distinct_cat <- placecat %>%
+    summarise(distinct_cats = n_distinct(place_cat)) |>
+    pull(distinct_cats)
+  
+  rows = distinct_cat
+  cols = distinct_cat
+  if (distinct_cat == 2) {
+    cats <- c("1-5", "6-10")
+  } else if (distinct_cat == 3) {
+    cats <- c("1-5", "6-10", "11-15")
+  } else if (distinct_cat == 4) {
+    cats <- c("1-5", "6-10", "11-15", "16-20")
+  } else if (distinct_cat == 5) {
+    cats <- c("1-5", "6-10", "11-15", "16-20", "21-25")
+  } else if (distinct_cat == 6) {
+    cats <- c("1-5", "6-10", "11-15", "16-20", "21-25", "26-30")
+  } else if (distinct_cat == 7) {
+    cats <- c("1-5", "6-10", "11-15", "16-20", "21-25", "26-30",
+              "31-35")
+  } else if (distinct_cat == 8) {
+    cats <- c("1-5", "6-10", "11-15", "16-20", "21-25", "26-30",
+              "31-35", "36-40")
+  }
+  
+  pass_matrix <- matrix(0, nrow = rows, ncol = cols)
+  for (i in 1:rows) {
+    for (j in 1:cols) {
+      matrix_row <- placecat |>
+        filter(place_cat == cats[i] & place_next_cat == cats[j])
+      if (nrow(matrix_row) == 0) {
+        matrix_value <- 0
+      } else {
+        matrix_value <- placecat |> 
+          filter(place_cat == cats[i] & place_next_cat == cats[j]) |> pull(prob)
+      }
+      pass_matrix[i, j] <- matrix_value
+    }
+  }
+  
+  rownames(pass_matrix) <- cats
+  colnames(pass_matrix) <- cats
+  
+  pass_matrix_df <- as.data.frame(as.table(pass_matrix))
+  p <- ggplot(pass_matrix_df, aes(Var1, Var2, fill = Freq)) +
+    geom_tile() +
+    scale_fill_gradient(low = "white", high = "#da3a32", guide = "none") +
+    geom_text(aes(label = round(Freq,2)), size = 3) +
+    labs(title = "Passing Probabilities",
+         subtitle = input_rider, 
+         x = "From Place", 
+         y = "To Place", fill = "Probability")
+  
+  return(p)
+}
+
+pp_riders <- c("PHIL NICOLETTI", "TANNER WARD", "JESS PETTIS")
+plots1 <- map(
+  pp_riders,
+  ~ pass_prob_rider_fn(
+      input_rider = .x
+    )
+)
+wrap_plots(plots1, ncol = 3)
+
+test <- all_2025_complete |>
+  filter(rider == "JESS PETTIS") |>
+  distinct(place)
+
+pass_prob_rider_fn("TANNER WARD")
+```
+
+
 For fatique effects, compare the first moto with the second moto of the day. Expect slower lap times. Consider mechanical changes or improved/worse track conditions.
 Look at the big findings from last year - WMX passing probs and fatigue effects - and see if same trends this year.
+Compare everything from last year to this year. Where is it headed? Were there improvements?
 ## 3.2 Moto quartile positions
 Looking at a rider's position at the 0/25/50/75/100% point of the moto.
 ## 3.3 Standarized lap times
