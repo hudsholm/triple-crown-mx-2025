@@ -120,11 +120,12 @@ if st.button("Show Profile", type="primary") and avail_classes:
         )
 
         # ── 4 metric bubbles — native st.metric ────────────────────────────────
-        m1, m2, m3, m4 = st.columns(4)
-        m1.metric("Avg Finish",   f"{avg_finish:.1f}")
-        m2.metric("Avg Z-Score",  f"{avg_z:+.2f}")
-        m3.metric("Avg % Off Best",   f"{avg_pct_off:.1f}%")
-        m4.metric("Podiums", str(podiums), delta=f" of {n_motos} motos")
+        m1, m2, m3, m4, m5 = st.columns(5)
+        m1.metric("Motos", str(n_motos))
+        m2.metric("Avg Finish",   f"{avg_finish:.1f}")
+        m3.metric("Avg Z-Score",  f"{avg_z:+.2f}")
+        m4.metric("Avg % Off Best",   f"{avg_pct_off:.1f}%")
+        m5.metric("Podiums", str(podiums))
 
         st.divider()
 
