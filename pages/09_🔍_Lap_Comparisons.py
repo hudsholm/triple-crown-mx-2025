@@ -106,7 +106,7 @@ if st.button("Update", type="primary") and eligible_riders:
 
         styled = (
             result.style
-            .applymap(colour_diff, subset=["Diff to Last Lap", "Diff to Leader Lap"])
+            .map(colour_diff, subset=["Diff to Last Lap", "Diff to Leader Lap"])
             .format({
                 "Diff to Last Lap":   lambda v: f"{v:+.3f}" if pd.notna(v) else "—",
                 "Diff to Leader Lap": lambda v: f"{v:+.3f}" if pd.notna(v) else "—",

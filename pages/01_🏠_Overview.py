@@ -25,7 +25,7 @@ st.divider()
 col1, col2, col3, col4, col5 = st.columns(5)
 col1.metric("Lap rows", f"{len(df):,}")
 col2.metric("Unique riders", df["name"].nunique())
-col3.metric("Classes", "450 · 250 · WMX")
+col3.metric("Classes", "450 / 250 / WMX")
 col4.metric("Tracks", df["track"].nunique())
 col5.metric("Seasons", f"{df['year'].min()} – {df['year'].max()}")
 

@@ -11,6 +11,14 @@ df = load_data()
 st.title("14. Prize Money")
 st.markdown("Simulated prize money per rider per season using the 2026 MXTOUR payout structure.")
 
+_img_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "2026_MXTOUR_Payout.png")
+if os.path.exists(_img_path):
+    col_img, _ = st.columns([1, 2])
+    with col_img:
+        st.image(_img_path, caption="2026 MXTOUR Payout Structure — $16,675 per race")
+
+st.divider()
+
 PAYOUT_450 = {1:1200,2:1000,3:950,4:850,5:700,6:600,7:500,8:400,9:300,10:250,11:200,12:200,13:150,14:150,15:150}
 PAYOUT_250 = {1:900,2:700,3:600,4:500,5:400,6:300,7:250,8:200,9:200,10:175,11:150,12:150,13:150,14:125,15:100}
 PAYOUT_WMX = {1:900,2:700,3:600,4:500,5:400,6:300,7:250,8:200,9:175,10:150}

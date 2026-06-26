@@ -44,7 +44,6 @@ def build_moto_results(_df):
     mr["cum_points"] = (
         mr.groupby(["name","class_label","year"],observed=True)["points"].cumsum()
     )
-    # Compute championship standing snapshot after each moto
     rows=[]
     for (cl,yr), grp in mr.groupby(["class_label","year"],observed=True):
         grp = grp.sort_values(["round","moto"]).copy()
@@ -110,47 +109,47 @@ if st.button("Show Profile", type="primary") and avail_classes:
         traffic_counts = sub["traffic_state"].astype(str).value_counts()
         traffic_pcts   = {s: traffic_counts.get(s,0)/len(sub)*100 for s in TRAFFIC_STATE_COLORS}
 
-        # ── Header card ────────────────────────────────────────────────────────
+        # ── Header: name + class badge ─────────────────────────────────────────
+        st.markdown(
+            f"### {rider_sel} &nbsp;"
+            f'<span style="background:{bg};color:{txt};border-radius:4px;padding:3px 10px;'
+            f'font-size:14px;font-weight:600">{class_sel}</span>'
+            f' &nbsp;<span style="background:#f0f0ee;color:#666;border-radius:4px;'
+            f'padding:3px 10px;font-size:13px">{mfr}</span>',
+            unsafe_allow_html=True,
+        )
+
+        # ── 4 metric bubbles — native st.metric ────────────────────────────────
+        m1, m2, m3, m4 = st.columns(4)
+        m1.metric("Avg Finish",   f"{avg_finish:.1f}",   f"{n_motos} motos")
+        m2.metric("Avg Z-Score",  f"{avg_z:+.2f}",       "vs field")
+        m3.metric("% Off Best",   f"{avg_pct_off:.1f}%", "avg lap")
+        m4.metric("Podiums",      str(podiums),           f"of {n_motos} motos")
+
+        st.divider()
+
+        # ── Traffic profile strip ──────────────────────────────────────────────
         traf_tot = sum(traffic_pcts.values()) or 1
         traf_w   = {k: v/traf_tot*100 for k,v in traffic_pcts.items()}
         strip_segs = "".join(
             f'<div style="flex:{traf_w[s]:.1f};background:{c};"></div>'
             for s,c in TRAFFIC_STATE_COLORS.items()
         )
-        legend_items = " ".join(
-            f'<span style="font-size:11px;color:#555"><span style="color:{c}">■</span> {traffic_pcts[s]:.0f}% {s.lower()}</span>'
+        legend_items = " &nbsp;".join(
+            f'<span style="font-size:14px;color:#333">'
+            f'<span style="color:{c};font-size:16px">■</span> '
+            f'<strong>{traffic_pcts[s]:.0f}%</strong> {s}</span>'
             for s,c in TRAFFIC_STATE_COLORS.items()
         )
-        metrics_html = "".join(f"""
-            <div style="flex:1;background:#f7f7f5;border:1px solid #e5e5e3;border-radius:8px;padding:12px 16px">
-                <div style="font-size:11px;color:#888;margin-bottom:6px">{lbl}</div>
-                <div style="font-size:22px;font-weight:600;color:#1a1a1a;line-height:1.1">{val}</div>
-                <div style="font-size:11px;color:#aaa;margin-top:4px">{sub_}</div>
-            </div>""" for lbl,val,sub_ in [
-                ("Avg finish",f"{avg_finish:.1f}",f"{n_motos} motos"),
-                ("Avg z-score",f"{avg_z:+.2f}","vs field"),
-                ("% off best",f"{avg_pct_off:.1f}%","avg lap"),
-                ("Podiums",str(podiums),f"of {n_motos} motos"),
-        ])
-        header_html = f"""
-        <div style="font-family:Arial,sans-serif;border:1px solid #e5e5e3;border-radius:12px;overflow:hidden;margin-bottom:16px">
-          <div style="padding:14px 20px 10px;border-bottom:1px solid #e5e5e3;display:flex;align-items:center;background:#fff">
-            <span style="font-size:20px;font-weight:700;color:#1a1a1a">{rider_sel}</span>
-            <span style="display:inline-block;font-size:11px;font-weight:600;background:{bg};color:{txt};border-radius:4px;padding:2px 8px;margin-left:8px">{class_sel}</span>
-            <span style="display:inline-block;font-size:11px;background:#f0f0ee;color:#666;border-radius:4px;padding:2px 8px;margin-left:4px">{mfr}</span>
-          </div>
-          <div style="display:flex;gap:10px;padding:14px 20px;border-bottom:1px solid #e5e5e3;background:#fff">
-            {metrics_html}
-          </div>
-          <div style="padding:10px 20px 14px;background:#fff">
-            <div style="font-size:11px;color:#888;margin-bottom:6px">Traffic profile</div>
-            <div style="display:flex;height:6px;border-radius:3px;overflow:hidden;background:#eee;margin-bottom:8px">
-              {strip_segs}
-            </div>
-            <div style="display:flex;gap:18px">{legend_items}</div>
-          </div>
-        </div>"""
-        st.markdown(header_html, unsafe_allow_html=True)
+        st.markdown(
+            f'<div style="margin-bottom:6px;font-size:14px;font-weight:600;color:#444">Traffic profile</div>'
+            f'<div style="display:flex;height:10px;border-radius:5px;overflow:hidden;background:#eee;margin-bottom:10px">'
+            f'{strip_segs}</div>'
+            f'<div style="display:flex;gap:24px;margin-bottom:8px">{legend_items}</div>',
+            unsafe_allow_html=True,
+        )
+
+        st.divider()
 
         # ── Pace arc ────────────────────────────────────────────────────────────
         arc = (
@@ -172,10 +171,11 @@ if st.button("Show Profile", type="primary") and avail_classes:
                        tickfont=dict(size=13,color="#1a1a1a"),tickangle=30,showgrid=True),
             yaxis=dict(**AXIS_STYLE,title=dict(text="Avg z-score",font=dict(size=15,color="#1a1a1a")),
                        tickfont=dict(size=13,color="#1a1a1a"),showgrid=True),
-            height=380,margin=dict(t=50,b=60,l=80,r=30),
+            height=420,margin=dict(t=50,b=60,l=80,r=30),
             plot_bgcolor="white",paper_bgcolor="white",
             font=dict(family="Arial, sans-serif",color="#1a1a1a"),
         )
+        st.plotly_chart(fig_arc, use_container_width=True)
 
         # ── Results & standing chart ───────────────────────────────────────────
         all_motos = (moto_res[(moto_res["class_label"]==class_sel)&(moto_res["year"]==year_sel)]
@@ -193,13 +193,13 @@ if st.button("Show Profile", type="primary") and avail_classes:
                   .merge(yr_moto[["x_label","finish_position","standing"]],on="x_label",how="left"))
         full_idx["standing_filled"]=full_idx["standing"].ffill()
 
-        x_labels      = full_idx["x_label"].tolist()
-        finish_vals   = full_idx["finish_position"].tolist()
-        stand_vals    = full_idx["standing_filled"].tolist()
+        x_labels    = full_idx["x_label"].tolist()
+        finish_vals = full_idx["finish_position"].tolist()
+        stand_vals  = full_idx["standing_filled"].tolist()
 
-        all_pos=[v for v in finish_vals+stand_vals if pd.notna(v)]
+        all_pos    = [v for v in finish_vals+stand_vals if pd.notna(v)]
         actual_max = max(all_pos) if all_pos else 10
-        dt = max(1, round(actual_max/5))
+        dt         = max(1, round(actual_max/5))
 
         fig_res=go.Figure()
         fig_res.add_trace(go.Scatter(x=x_labels,y=finish_vals,mode="lines+markers",
@@ -216,17 +216,12 @@ if st.button("Show Profile", type="primary") and avail_classes:
             yaxis=dict(**AXIS_STYLE,title=dict(text="Position",font=dict(size=15,color="#1a1a1a")),
                        tickfont=dict(size=13,color="#1a1a1a"),
                        range=[actual_max+2,0.5],dtick=dt,tick0=1,showgrid=True),
-            legend=dict(orientation="h",x=0.5,xanchor="center",y=-0.22,font=dict(size=13,color="#1a1a1a")),
-            height=380,margin=dict(t=50,b=90,l=80,r=40),
+            legend=dict(orientation="h",x=0.5,xanchor="center",y=-0.18,font=dict(size=13,color="#1a1a1a")),
+            height=420,margin=dict(t=50,b=90,l=80,r=40),
             plot_bgcolor="white",paper_bgcolor="white",
             font=dict(family="Arial, sans-serif",color="#1a1a1a"),
         )
-
-        col_left, col_right = st.columns(2)
-        with col_left:
-            st.plotly_chart(fig_arc, use_container_width=True)
-        with col_right:
-            st.plotly_chart(fig_res, use_container_width=True)
+        st.plotly_chart(fig_res, use_container_width=True)
 
 st.divider()
 st.markdown("""
