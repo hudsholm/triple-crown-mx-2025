@@ -25,7 +25,7 @@ def hex_to_rgba(h, op=0.12):
     return f"rgba({r},{g},{b},{op})"
 
 st.title("18. Rider Profiles")
-st.markdown("Per-rider season summary card with pace arc, results timeline, and championship standing trajectory.")
+st.markdown("Per-rider season summary card with pace arc, results timeline, and championship standing trajectory")
 
 # ── Cached data builds ────────────────────────────────────────────────────────
 @st.cache_data

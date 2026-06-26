@@ -15,7 +15,7 @@ st.set_page_config(
 df = load_data()
 
 st.title("5. Rider Rivalries")
-st.markdown("On-track proximity between consecutively-placed riders.")
+st.markdown("On-track proximity between consecutively-placed riders")
 
 @st.cache_data
 def build_rivalry_base(_df):

@@ -42,7 +42,11 @@ ABBREV_TO_NAME = {**PROV_ABBREV_TO_NAME, **US_ABBREV_TO_NAME}
 NA_STATES = set(ABBREV_TO_NAME.keys())
 
 st.title("2. Demographic Analysis")
-st.markdown("Breakdown by province/state, rider retention, and manufacturer success.")
+st.markdown("""
+- Breakdown by province/state
+- Rider retention
+- Manufacturer success
+""")
 
 # ── Riders geo base ────────────────────────────────────────────────────────────
 riders_geo = (

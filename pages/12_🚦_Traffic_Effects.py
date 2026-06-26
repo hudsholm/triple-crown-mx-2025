@@ -30,7 +30,7 @@ def hex_to_rgba(hex_color, opacity=0.08):
     return f"rgba({r},{g},{b},{opacity})"
 
 st.title("12. Traffic Effects")
-st.markdown("Pace by traffic condition and lap-by-lap place journey, coloured by traffic state.")
+st.markdown("Pace by traffic condition and lap-by-lap place journey, coloured by traffic state")
 
 @st.cache_data
 def build_traffic_base(_df):

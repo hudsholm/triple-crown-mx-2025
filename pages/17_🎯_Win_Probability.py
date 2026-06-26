@@ -19,7 +19,7 @@ st.set_page_config(page_title="Triple Crown MX · Win Probability", page_icon="�
 df = load_data()
 
 st.title("17. Win Probability Model")
-st.markdown("Five model ablation (Logistic Regression variants + XGBoost) trained on 2024, tested on 2025, plus Bradley-Terry strength rankings.")
+st.markdown("Five models trained on 2024, tested on 2025, plus Bradley-Terry strength rankings")
 
 FEATURES_FULL    = ["place","behind_time","frac_remaining","place_x_frac","behind_x_frac"]
 FEATURES_NO_GAP  = ["place","frac_remaining","place_x_frac"]
@@ -219,19 +219,24 @@ with col_b:
     elif sel_model=="Model 5 — XGBoost" and r.get("importance") is not None:
         st.markdown("**Feature importances**")
         st.dataframe(r["importance"], use_container_width=False)
-        st.markdown("**Learning curve**")
-        lc_tr,lc_te=r["lc_train"],r["lc_test"]
-        best_t=lc_te.index(max(lc_te))+1
-        fig_lc=go.Figure()
-        fig_lc.add_trace(go.Scatter(x=list(range(1,len(lc_tr)+1)),y=lc_tr,mode="lines",name="Train AUC",line=dict(color="#1A7FE8",width=2)))
-        fig_lc.add_trace(go.Scatter(x=list(range(1,len(lc_te)+1)),y=lc_te,mode="lines",name="Test AUC",line=dict(color="#E8641A",width=2)))
-        fig_lc.add_vline(x=best_t,line_dash="dash",line_color="grey",
-            annotation_text=f"Best: {max(lc_te):.4f} (tree {best_t})",annotation_position="top right")
-        fig_lc.update_layout(xaxis=dict(title="Trees"),yaxis=dict(title="AUC",range=[0.95,1.0]),
-            height=300,margin=dict(l=60,r=40,t=30,b=60),legend=dict(title=""))
-        st.plotly_chart(fig_lc,use_container_width=True)
     else:
         st.markdown("**Note:** Platt scaling (cv=5) fits 5 separate base models — no single coefficient table.")
+
+# Learning curve full-width below, only for XGBoost
+if sel_model=="Model 5 — XGBoost" and r.get("lc_train") is not None:
+    st.markdown("**Learning curve**")
+    lc_tr,lc_te=r["lc_train"],r["lc_test"]
+    best_t=lc_te.index(max(lc_te))+1
+    fig_lc=go.Figure()
+    fig_lc.add_trace(go.Scatter(x=list(range(1,len(lc_tr)+1)),y=lc_tr,mode="lines",
+        name="Train AUC",line=dict(color="#1A7FE8",width=2)))
+    fig_lc.add_trace(go.Scatter(x=list(range(1,len(lc_te)+1)),y=lc_te,mode="lines",
+        name="Test AUC",line=dict(color="#E8641A",width=2)))
+    fig_lc.add_vline(x=best_t,line_dash="dash",line_color="grey",
+        annotation_text=f"Best: {max(lc_te):.4f} (tree {best_t})",annotation_position="top right")
+    fig_lc.update_layout(xaxis=dict(title="Trees"),yaxis=dict(title="AUC",range=[0.95,1.0]),
+        height=320,margin=dict(l=60,r=60,t=30,b=60),legend=dict(title=""))
+    st.plotly_chart(fig_lc,use_container_width=True)
 
 st.divider()
 

@@ -14,7 +14,7 @@ st.set_page_config(
 df = load_data()
 
 st.title("9. Lap Comparisons to Race Leader")
-st.markdown("Per-lap time table with difference to the previous lap and to the leader's lap time.")
+st.markdown("Per-lap time table with difference to the previous lap and to the leader's lap time")
 
 all_years   = sorted(df["year"].astype(str).unique())
 all_classes = ["450", "250", "WMX"]
@@ -46,74 +46,75 @@ rider_sel = st.selectbox(
 )
 
 if st.button("Update", type="primary") and eligible_riders:
-    subset = race_subset.copy()
+    with st.spinner("Loading lap data..."):
+        subset = race_subset.copy()
 
-    # Leader lap times (place == 1)
-    leader_laps = (
-        subset[subset["place"] == 1]
-        .dropna(subset=["lap", "lap_time"])
-        [["lap", "lap_time"]]
-        .rename(columns={"lap_time": "leader_lap_time"})
-        .drop_duplicates(subset=["lap"])
-    )
-    leader_laps["lap"] = leader_laps["lap"].astype(float)
-
-    # Selected rider laps
-    rider_laps = (
-        subset[subset["name"] == rider_sel]
-        .dropna(subset=["lap", "lap_time"])
-        [["lap", "lap_time", "place"]]
-        .sort_values("lap")
-        .copy()
-    )
-    rider_laps["lap"] = rider_laps["lap"].astype(float)
-
-    if rider_laps.empty:
-        st.warning(f"No lap time data for {rider_sel}.")
-    else:
-        rider_laps["diff_to_last"]  = rider_laps["lap_time"].diff()
-        rider_laps = rider_laps.merge(leader_laps, on="lap", how="left")
-        rider_laps["diff_to_leader"] = rider_laps["lap_time"] - rider_laps["leader_lap_time"]
-
-        track = subset["track"].iloc[0]
-        fp_series = subset[subset["name"] == rider_sel]["finish_position"].dropna()
-        finish_pos = int(fp_series.iloc[0]) if not fp_series.empty else "N/A"
-
-        st.markdown(
-            f"**{rider_sel} — P{finish_pos} | {cls_sel} | {track} | "
-            f"Round {rnd_sel} Moto {mto_sel}**"
+        # Leader lap times (place == 1)
+        leader_laps = (
+            subset[subset["place"] == 1]
+            .dropna(subset=["lap", "lap_time"])
+            [["lap", "lap_time"]]
+            .rename(columns={"lap_time": "leader_lap_time"})
+            .drop_duplicates(subset=["lap"])
         )
+        leader_laps["lap"] = leader_laps["lap"].astype(float)
 
-        result = rider_laps[["lap", "place", "lap_time", "diff_to_last", "diff_to_leader"]].copy()
-        result["lap"]            = result["lap"].astype(int)
-        result["place"]          = result["place"].astype("Int64")
-        result["lap_time"]       = result["lap_time"].round(3)
-        result["diff_to_last"]   = result["diff_to_last"].round(3)
-        result["diff_to_leader"] = result["diff_to_leader"].round(3)
-        result = result.rename(columns={
-            "lap":             "Lap",
-            "place":           "Place",
-            "lap_time":        "Time (s)",
-            "diff_to_last":    "Diff to Last Lap",
-            "diff_to_leader":  "Diff to Leader Lap",
-        }).reset_index(drop=True)
-
-        # Colour-code the diff columns: green = faster, red = slower
-        def colour_diff(val):
-            if pd.isna(val):
-                return ""
-            return "color: #1aad1a" if val < 0 else ("color: #cc3333" if val > 0 else "")
-
-        styled = (
-            result.style
-            .map(colour_diff, subset=["Diff to Last Lap", "Diff to Leader Lap"])
-            .format({
-                "Diff to Last Lap":   lambda v: f"{v:+.3f}" if pd.notna(v) else "—",
-                "Diff to Leader Lap": lambda v: f"{v:+.3f}" if pd.notna(v) else "—",
-                "Time (s)":           "{:.3f}",
-            })
+        # Selected rider laps
+        rider_laps = (
+            subset[subset["name"] == rider_sel]
+            .dropna(subset=["lap", "lap_time"])
+            [["lap", "lap_time", "place"]]
+            .sort_values("lap")
+            .copy()
         )
-        st.dataframe(styled, use_container_width=False, hide_index=True)
+        rider_laps["lap"] = rider_laps["lap"].astype(float)
+
+        if rider_laps.empty:
+            st.warning(f"No lap time data for {rider_sel}.")
+        else:
+            rider_laps["diff_to_last"]  = rider_laps["lap_time"].diff()
+            rider_laps = rider_laps.merge(leader_laps, on="lap", how="left")
+            rider_laps["diff_to_leader"] = rider_laps["lap_time"] - rider_laps["leader_lap_time"]
+
+            track = subset["track"].iloc[0]
+            fp_series = subset[subset["name"] == rider_sel]["finish_position"].dropna()
+            finish_pos = int(fp_series.iloc[0]) if not fp_series.empty else "N/A"
+
+            st.markdown(
+                f"**{rider_sel} — P{finish_pos} | {cls_sel} | {track} | "
+                f"Round {rnd_sel} Moto {mto_sel}**"
+            )
+
+            result = rider_laps[["lap", "place", "lap_time", "diff_to_last", "diff_to_leader"]].copy()
+            result["lap"]            = result["lap"].astype(int)
+            result["place"]          = result["place"].astype("Int64")
+            result["lap_time"]       = result["lap_time"].round(3)
+            result["diff_to_last"]   = result["diff_to_last"].round(3)
+            result["diff_to_leader"] = result["diff_to_leader"].round(3)
+            result = result.rename(columns={
+                "lap":             "Lap",
+                "place":           "Place",
+                "lap_time":        "Time (s)",
+                "diff_to_last":    "Diff to Last Lap",
+                "diff_to_leader":  "Diff to Leader Lap",
+            }).reset_index(drop=True)
+
+            # Colour-code the diff columns: green = faster, red = slower
+            def colour_diff(val):
+                if pd.isna(val):
+                    return ""
+                return "color: #1aad1a" if val < 0 else ("color: #cc3333" if val > 0 else "")
+
+            styled = (
+                result.style
+                .map(colour_diff, subset=["Diff to Last Lap", "Diff to Leader Lap"])
+                .format({
+                    "Diff to Last Lap":   lambda v: f"{v:+.3f}" if pd.notna(v) else "—",
+                    "Diff to Leader Lap": lambda v: f"{v:+.3f}" if pd.notna(v) else "—",
+                    "Time (s)":           "{:.3f}",
+                })
+            )
+            st.dataframe(styled, use_container_width=False, hide_index=True)
 
 st.divider()
 st.markdown("""

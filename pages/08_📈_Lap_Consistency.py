@@ -24,7 +24,10 @@ def hex_to_rgba(hex_color, opacity=0.08):
     return f"rgba({r},{g},{b},{opacity})"
 
 st.title("8. Lap Consistency")
-st.markdown("KDE lap time distributions for the top 5 finishers, plus coefficient of variation rankings.")
+st.markdown("""
+- KDE lap time distributions for the top 5 moto finishers
+- Coefficient of variation
+""")
 
 all_years   = sorted(df["year"].astype(str).unique())
 all_classes = ["450", "250", "WMX"]

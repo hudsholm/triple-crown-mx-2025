@@ -22,7 +22,10 @@ def fmt_time(s):
     m = int(s//60); return f"{m}:{s%60:06.3f}"
 
 st.title("13. Gender Gap")
-st.markdown("Lap-time comparison between the 250 and WMX classes (same bike), plus a Jamie Astudillo cross-class case study.")
+st.markdown("""
+- Lap-time comparison between the 250 and WMX classes (same bike)
+- Jamie Astudillo cross-class case study
+""")
 
 @st.cache_data
 def build_gg_base(_df):

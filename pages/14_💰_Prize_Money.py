@@ -9,7 +9,7 @@ st.set_page_config(page_title="Triple Crown MX · Prize Money", page_icon="🏍�
 df = load_data()
 
 st.title("14. Prize Money")
-st.markdown("Simulated prize money per rider per season using the 2026 MXTOUR payout structure.")
+st.markdown("Simulated prize money per rider per season using the 2026 MXTOUR payout structure")
 
 _img_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "2026_MXTOUR_Payout.png")
 if os.path.exists(_img_path):

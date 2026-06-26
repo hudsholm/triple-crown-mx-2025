@@ -18,7 +18,7 @@ st.set_page_config(
 df = load_data()
 
 st.title("7. From the Holeshot to the Podium")
-st.markdown("Average starts, finishes, and positions gained/lost per moto.")
+st.markdown("Average starts, finishes, and positions gained/lost per moto")
 
 CLASS_COLORS = {"450": "#E8641A", "250": "#1A7FE8", "WMX": "#2ECC71"}
 

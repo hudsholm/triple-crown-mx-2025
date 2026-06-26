@@ -26,7 +26,10 @@ def fmt_time(s):
     m=int(s//60); return f"{m}:{s%60:05.2f}"
 
 st.title("15. Weather Effects")
-st.markdown("Year-over-year lap time comparisons at repeat venues, and wet vs. dry pace for top riders.")
+st.markdown("""
+- Year-over-year lap time comparisons at repeat venues
+- Wet vs. dry pace for top riders
+""")
 
 @st.cache_data
 def build_wx_base(_df, _w):

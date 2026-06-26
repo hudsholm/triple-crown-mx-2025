@@ -23,7 +23,10 @@ def hex_to_rgba(h,op=0.08):
     return f"rgba({r},{g},{b},{op})"
 
 st.title("16. Fall Detection")
-st.markdown("Recoverable anomalies (lap-time spike + place drop, rider finishes cleanly) and unrecoverable anomalies/DNFs, plus a simulated no-DNF standings.")
+st.markdown("""
+- Distinguishing recoverable and unrecoverable anomalies
+- Simulated no-DNF standings
+""")
 
 @st.cache_data
 def build_anom_base(_df):

@@ -12,9 +12,9 @@ st.set_page_config(
 
 df = load_data()
 
-st.title("🏍️ Triple Crown Motocross — 2024 & 2025")
+st.title("🏍️ Triple Crown Motocross — 2025 Report")
 st.markdown(
-    "Lap time and race data for the **CMRC / MXTOUR** Canadian motocross series. "
+    "Lap time and race data for the Canadian Triple Crown Motocross series. "
     "Data sourced from [resultsmx.com](https://resultsmx.com/cmrc-archive-2024/) (2024) "
     "and [cmrc.tracksideresults.com](https://cmrc.tracksideresults.com/) (2025)."
 )
@@ -22,6 +22,12 @@ st.markdown(
 st.divider()
 
 # ── Top-line metrics ───────────────────────────────────────────────────────────
+st.markdown("""
+<style>
+[data-testid="stMetricValue"] { font-size: 1.2rem; }
+[data-testid="stMetricLabel"] { font-size: 0.8rem; }
+</style>
+""", unsafe_allow_html=True)
 col1, col2, col3, col4, col5 = st.columns(5)
 col1.metric("Lap rows", f"{len(df):,}")
 col2.metric("Unique riders", df["name"].nunique())
@@ -44,19 +50,6 @@ for cls in ["450", "250", "WMX"]:
     c2.markdown(f"{riders} unique riders")
     c3.markdown(f"{races} motos")
     c4.markdown(f"{laps:,} lap rows")
-
-st.divider()
-
-# ── Rounds per year ────────────────────────────────────────────────────────────
-st.subheader("Rounds per year")
-rounds = (
-    df.drop_duplicates(subset=["year", "round"])
-    .groupby("year")["round"]
-    .max()
-    .reset_index()
-    .rename(columns={"year": "Season", "round": "Rounds"})
-)
-st.dataframe(rounds, hide_index=True, use_container_width=False)
 
 st.divider()
 

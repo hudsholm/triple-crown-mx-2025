@@ -25,7 +25,10 @@ def hex_to_rgba(hex_color, opacity=0.08):
     return f"rgba({r},{g},{b},{opacity})"
 
 st.title("11. Standardizing Lap Times")
-st.markdown("% off best and z-score distributions for head-to-head rider comparisons, plus season-level regression and ranking tables.")
+st.markdown("""
+- % off best
+- Z-score
+""")
 
 @st.cache_data
 def build_pob_base(_df):

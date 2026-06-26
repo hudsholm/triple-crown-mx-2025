@@ -16,7 +16,7 @@ st.set_page_config(
 df = load_data()
 
 st.title("6. Points Race")
-st.markdown("Cumulative championship points across rounds for the top 10 riders per class.")
+st.markdown("Cumulative championship points across rounds for the top 10 riders per class")
 
 @st.cache_data
 def build_points_race(_df):

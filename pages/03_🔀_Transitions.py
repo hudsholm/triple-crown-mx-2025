@@ -97,7 +97,12 @@ all_tracks  = sorted(df["track"].astype(str).unique())
 all_riders  = sorted(df["name"].astype(str).unique())
 
 st.title("3. Transition Matrices")
-st.markdown("Passing probabilities, start-finish conversion, pass rates by lap, and gap distributions.")
+st.markdown("""
+- Passing probabilities
+- Start-finish conversion
+- Pass rates by lap
+- Gap distributions
+""")
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # 3a. Lap-to-lap transition matrix

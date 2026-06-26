@@ -15,7 +15,7 @@ st.set_page_config(
 df = load_data()
 
 st.title("10. Place by Moto Quartile")
-st.markdown("Position snapshots at 0%, 25%, 50%, 75%, and 100% of each moto — per rider and season averages.")
+st.markdown("Position snapshots at 0%, 25%, 50%, 75%, and 100% of each moto — per rider and season averages")
 
 @st.cache_data
 def build_quartile_df(_df):
